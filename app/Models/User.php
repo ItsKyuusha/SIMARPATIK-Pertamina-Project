@@ -46,10 +46,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    protected function password(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => $value ? Hash::needsRehash($value) ? Hash::make($value) : $value : null
-        );
-    }
 }
