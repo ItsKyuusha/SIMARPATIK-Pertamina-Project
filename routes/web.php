@@ -28,3 +28,21 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
         return "Dashboard Operator";
     });
 });
+
+Route::middleware(['auth', 'role:management'])->group(function () {
+    Route::get('/management', function () {
+        return view('management.dashboard');
+    });
+});
+
+Route::middleware(['auth', 'role:leader'])->group(function () {
+    Route::get('/leader', function () {
+        return view('leader.dashboard');
+    });
+});
+
+Route::middleware(['auth', 'role:operator'])->group(function () {
+    Route::get('/operator', function () {
+        return view('operator.dashboard');
+    });
+});
