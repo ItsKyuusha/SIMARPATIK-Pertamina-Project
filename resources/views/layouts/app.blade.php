@@ -25,14 +25,41 @@
         <nav class="flex-1 p-4 space-y-1">
 
             @if(auth()->user()->role == 'management')
-                <a href="/management"
-                   class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition">
+                <p class="text-xs text-slate-400 uppercase mt-2 mb-2">Management</p>
+
+                <a href="/management/dashboard"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40">
                     📊 Dashboard
                 </a>
 
-                <a href="#"
-                   class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition">
-                    👤 User Management
+                <a href="/management/employees"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40">
+                    👤 Karyawan
+                </a>
+
+                <a href="/management/contracts"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40">
+                    📄 Kontrak
+                </a>
+
+                <a href="/management/shifts"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40">
+                    ⏰ Shift
+                </a>
+
+                <a href="/management/schedules"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40">
+                    📅 Jadwal
+                </a>
+
+                <a href="/management/swaps"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40">
+                    🔄 Approval Shift
+                </a>
+
+                <a href="/management/histories"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40">
+                    📜 Riwayat
                 </a>
             @endif
 
