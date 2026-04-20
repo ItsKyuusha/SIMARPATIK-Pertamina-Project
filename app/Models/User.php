@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -46,4 +48,23 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // 🔗 Relasi ke Employee
+    public function employee(): HasOne
+    {
+        return $this->hasOne(Employee::class);
+    }
+
+    // 🔗 Approval sebagai Leader
+    public function approvedLeaderSwaps()
+    {
+        return $this->hasMany(ShiftSwap::class, 'approved_by_leader');
+    }
+
+    // 🔗 Approval sebagai Management
+    public function approvedManagementSwaps()
+    {
+        return $this->hasMany(ShiftSwap::class, 'approved_by_management');
+    }
+
 }

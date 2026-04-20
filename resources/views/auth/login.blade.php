@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SIMARPATIK - Management System</title>
+    <meta name="description" content="Shifting Master RTC Pertamina Patra Logistik" />
+    <meta name="author" content="Kyuusha" />
+    <link rel="shortcut icon" href="{{ asset('logo pertamina.png') }}" type="image/x-icon" />
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-cyan-400">
@@ -23,7 +28,7 @@
         @endif
 
         <!-- Form -->
-        <form method="POST" action="/login" class="space-y-4">
+        <form method="POST" action="/" class="space-y-4">
             @csrf
 
             <!-- Email -->
