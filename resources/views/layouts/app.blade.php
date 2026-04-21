@@ -64,15 +64,32 @@
             @endif
 
             @if(auth()->user()->role == 'leader')
-                <a href="/leader"
-                   class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition">
+                <p class="text-xs text-slate-400 uppercase mt-4 mb-2">Leader Panel</p>
+
+                <!-- Dashboard -->
+                <a href="/leader/dashboard"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition {{ request()->is('leader/dashboard') ? 'bg-slate-600/50' : '' }}">
                     📊 Dashboard
                 </a>
 
-                <a href="#"
-                   class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition">
-                    👥 Team Report
+                <!-- Jadwal Tim -->
+                <a href="/leader/team"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition {{ request()->is('leader/team*') ? 'bg-slate-600/50' : '' }}">
+                    👥 Jadwal Tim
                 </a>
+
+                <!-- Approval Operator -->
+                <a href="/leader/swaps"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition {{ request()->is('leader/swaps*') ? 'bg-slate-600/50' : '' }}">
+                    🔄 Approval Operator
+                </a>
+
+                <!-- Tukar Shift Leader -->
+                <a href="/leader/swap/create"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition {{ request()->is('leader/swap/create') ? 'bg-slate-600/50' : '' }}">
+                    🔁 Tukar Shift Leader
+                </a>
+
             @endif
 
             @if(auth()->user()->role == 'operator')

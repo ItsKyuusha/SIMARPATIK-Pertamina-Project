@@ -20,11 +20,11 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if ($user->role == 'management') {
-                return redirect('/management');
+                return redirect('/management/dashboard');
             } elseif ($user->role == 'leader') {
-                return redirect('/leader');
+                return redirect('/leader/dashboard');
             } else {
-                return redirect('/operator');
+                return redirect('/operator/dashboard');
             }
         }
 
@@ -34,6 +34,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect('/');
     }
 }

@@ -1,33 +1,55 @@
 @extends('layouts.app')
 
+@section('title', 'Dashboard Leader')
+
 @section('content')
-<h2 class="text-2xl font-bold text-gray-800 mb-6">
-    Leader Dashboard
-</h2>
+<div class="space-y-6">
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Statistik -->
+    <div class="grid grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow border">
+            <h2 class="text-gray-500 text-sm">Total Tim</h2>
+            <p class="text-3xl font-bold">{{ $totalTeam }}</p>
+        </div>
 
-    <div class="bg-yellow-500 text-white p-5 rounded-xl shadow">
-        <p class="text-sm">Jumlah Tim</p>
-        <h3 class="text-3xl font-bold mt-2">5</h3>
+        <div class="bg-white p-6 rounded-xl shadow border">
+            <h2 class="text-gray-500 text-sm">Shift Hari Ini</h2>
+            <p class="text-3xl font-bold">{{ $todaySchedules->count() }}</p>
+        </div>
     </div>
 
-    <div class="bg-blue-500 text-white p-5 rounded-xl shadow">
-        <p class="text-sm">Laporan Hari Ini</p>
-        <h3 class="text-3xl font-bold mt-2">12</h3>
+    <!-- Jadwal Hari Ini -->
+    <div class="bg-white p-6 rounded-xl shadow border">
+        <h2 class="font-bold mb-4">Jadwal Hari Ini</h2>
+
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="text-left border-b">
+                    <th class="p-2">Nama</th>
+                    <th>Shift</th>
+                    <th>Jam</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @forelse($todaySchedules as $item)
+                <tr class="border-t">
+                    <td class="p-2">{{ $item->employee->nama }}</td>
+                    <td>{{ $item->shift->kode_shift }}</td>
+                    <td>
+                        {{ $item->shift->jam_masuk }} - {{ $item->shift->jam_keluar }}
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="3" class="p-4 text-center text-gray-500">
+                        Tidak ada jadwal hari ini
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 
-    <div class="bg-green-500 text-white p-5 rounded-xl shadow">
-        <p class="text-sm">Progress</p>
-        <h3 class="text-3xl font-bold mt-2">80%</h3>
-    </div>
-
-</div>
-
-<div class="mt-8 bg-white p-5 rounded-xl shadow">
-    <h3 class="font-semibold text-gray-700 mb-2">Team Summary</h3>
-    <p class="text-sm text-gray-500">
-        Pantau performa tim dan laporan harian.
-    </p>
 </div>
 @endsection
