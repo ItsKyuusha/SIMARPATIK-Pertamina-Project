@@ -1,33 +1,32 @@
 @extends('layouts.app')
 
+@section('title', 'Dashboard Operator')
+
 @section('content')
-<h2 class="text-2xl font-bold text-gray-800 mb-6">
-    Operator Dashboard
-</h2>
+<div class="space-y-6">
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Statistik -->
+    <div class="grid grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow border">
+            <h2 class="text-gray-500 text-sm">Shift Hari Ini</h2>
 
-    <div class="bg-indigo-500 text-white p-5 rounded-xl shadow">
-        <p class="text-sm">Task Hari Ini</p>
-        <h3 class="text-3xl font-bold mt-2">8</h3>
+            @if($todaySchedule)
+                <p class="text-xl font-bold">
+                    {{ $todaySchedule->shift->kode_shift }}
+                </p>
+                <p class="text-sm text-gray-500">
+                    {{ $todaySchedule->shift->jam_masuk }} - {{ $todaySchedule->shift->jam_keluar }}
+                </p>
+            @else
+                <p class="text-gray-400">Libur / Tidak ada shift</p>
+            @endif
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow border">
+            <h2 class="text-gray-500 text-sm">Total Shift Bulan Ini</h2>
+            <p class="text-3xl font-bold">{{ $totalShift }}</p>
+        </div>
     </div>
 
-    <div class="bg-green-500 text-white p-5 rounded-xl shadow">
-        <p class="text-sm">Task Selesai</p>
-        <h3 class="text-3xl font-bold mt-2">5</h3>
-    </div>
-
-    <div class="bg-red-500 text-white p-5 rounded-xl shadow">
-        <p class="text-sm">Task Pending</p>
-        <h3 class="text-3xl font-bold mt-2">3</h3>
-    </div>
-
-</div>
-
-<div class="mt-8 bg-white p-5 rounded-xl shadow">
-    <h3 class="font-semibold text-gray-700 mb-2">Activity</h3>
-    <p class="text-sm text-gray-500">
-        Kelola dan selesaikan task harian.
-    </p>
 </div>
 @endsection

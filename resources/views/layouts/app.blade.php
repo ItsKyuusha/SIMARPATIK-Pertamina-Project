@@ -93,15 +93,28 @@
             @endif
 
             @if(auth()->user()->role == 'operator')
-                <a href="/operator"
-                   class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition">
+                <p class="text-xs text-slate-400 uppercase mt-4 mb-2">Operator</p>
+
+                <a href="/operator/dashboard"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition {{ request()->is('operator/dashboard') ? 'bg-slate-600/50' : '' }}">
                     📊 Dashboard
                 </a>
 
-                <a href="#"
-                   class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition">
-                    📝 Task List
+                <a href="/operator/schedule"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition {{ request()->is('operator/schedule') ? 'bg-slate-600/50' : '' }}">
+                    📅 Jadwal Saya
                 </a>
+
+                <a href="/operator/swap"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition {{ request()->is('operator/swap*') ? 'bg-slate-600/50' : '' }}">
+                    🔄 Tukar Shift
+                </a>
+
+                <a href="/operator/history"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-600/40 transition {{ request()->is('operator/history') ? 'bg-slate-600/50' : '' }}">
+                    📜 Riwayat Shift
+                </a>
+
             @endif
 
         </nav>
