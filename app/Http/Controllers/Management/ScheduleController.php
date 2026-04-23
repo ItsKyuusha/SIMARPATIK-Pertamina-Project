@@ -10,9 +10,16 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $schedules = Schedule::with(['employee', 'shift'])->get();
+        $query = Schedule::with(['employee', 'shift', 'leader']);
+
+        if ($request->tanggal) {
+            $query->whereDate('tanggal', $request->tanggal);
+        }
+
+        $schedules = $query->latest()->get();
+
         return view('management.schedules.index', compact('schedules'));
     }
 
@@ -20,7 +27,8 @@ class ScheduleController extends Controller
     {
         return view('management.schedules.create', [
             'employees' => Employee::all(),
-            'shifts' => Shift::all()
+            'shifts' => Shift::all(),
+            'leaders' => Employee::where('jabatan', 'leader')->get()
         ]);
     }
 
@@ -29,6 +37,7 @@ class ScheduleController extends Controller
         $request->validate([
             'employee_id' => 'required',
             'shift_id' => 'required',
+            'leader_id' => 'required',
             'tanggal' => 'required|date'
         ]);
 
@@ -41,9 +50,14 @@ class ScheduleController extends Controller
             return back()->withErrors('Jadwal sudah ada!');
         }
 
-        Schedule::create($request->all());
+        Schedule::create([
+            'employee_id' => $request->employee_id,
+            'shift_id' => $request->shift_id,
+            'leader_id' => $request->leader_id,
+            'tanggal' => $request->tanggal,
+        ]);
 
-        return redirect()->route('schedules.index');
+        return redirect()->route('schedules.index')->with('success', 'Jadwal berhasil ditambahkan');
     }
 
     public function destroy(Schedule $schedule)

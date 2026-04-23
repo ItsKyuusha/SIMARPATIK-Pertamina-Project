@@ -15,8 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('nama');
-            $table->string('nik')->unique();
-            $table->foreignId('leader_id')->nullable()->constrained('employees')->nullOnDelete();
+            $table->string('nip')->unique();
+
+            // tambahan
+            $table->enum('gender', ['L', 'P'])->nullable();
+            $table->text('alamat')->nullable();
+            $table->string('notelp')->nullable();
+            $table->string('jabatan')->nullable();
+            $table->foreignId('jenis_kontrak_id')->nullable()->constrained('contracts')->nullOnDelete();
+
             $table->timestamps();
         });
     }

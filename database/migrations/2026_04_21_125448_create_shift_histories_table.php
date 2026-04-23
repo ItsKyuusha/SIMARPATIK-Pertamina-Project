@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contracts', function (Blueprint $table) {
+        Schema::create('shift_histories', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kontrak');
-            $table->text('deskripsi')->nullable();
+            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('shift_id')->constrained()->cascadeOnDelete();
+            $table->date('tanggal');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('shift_histories');
     }
 };
+

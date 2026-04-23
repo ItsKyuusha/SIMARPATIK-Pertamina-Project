@@ -9,6 +9,7 @@ class Schedule extends Model
     protected $fillable = [
         'employee_id',
         'shift_id',
+        'leader_id',
         'tanggal'
     ];
 
@@ -16,7 +17,7 @@ class Schedule extends Model
         'tanggal' => 'date'
     ];
 
-    // 🔗 Employee
+    // 🔗 Operator
     public function employee()
     {
         return $this->belongsTo(Employee::class);
@@ -26,6 +27,12 @@ class Schedule extends Model
     public function shift()
     {
         return $this->belongsTo(Shift::class);
+    }
+
+    // 🔗 Leader (🔥 INI KUNCI)
+    public function leader()
+    {
+        return $this->belongsTo(Employee::class, 'leader_id');
     }
 
     // 🔗 Swap

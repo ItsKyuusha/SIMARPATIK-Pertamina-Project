@@ -9,8 +9,12 @@ class Employee extends Model
     protected $fillable = [
         'user_id',
         'nama',
-        'nik',
-        'leader_id'
+        'nip',
+        'gender',
+        'alamat',
+        'notelp',
+        'jabatan',
+        'jenis_kontrak_id'
     ];
 
     // 🔗 ke User
@@ -19,22 +23,22 @@ class Employee extends Model
         return $this->belongsTo(User::class);
     }
 
-    // 🔗 Leader (self relation)
-    public function leader()
+    // 🔗 Jenis Kontrak
+    public function jenisKontrak()
     {
-        return $this->belongsTo(Employee::class, 'leader_id');
+        return $this->belongsTo(Contract::class, 'jenis_kontrak_id');
     }
 
-    // 🔗 Anak buah (operator di bawah leader)
-    public function subordinates()
-    {
-        return $this->hasMany(Employee::class, 'leader_id');
-    }
-
-    // 🔗 Jadwal
+    // 🔗 Jadwal sebagai operator
     public function schedules()
     {
         return $this->hasMany(Schedule::class);
+    }
+
+    // 🔗 Jadwal sebagai leader (🔥 penting)
+    public function leaderSchedules()
+    {
+        return $this->hasMany(Schedule::class, 'leader_id');
     }
 
     // 🔗 Swap sebagai requester

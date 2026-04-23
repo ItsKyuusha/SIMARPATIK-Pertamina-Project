@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
             $table->foreignId('shift_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('leader_id')->nullable()->constrained('employees')->nullOnDelete();
             $table->date('tanggal');
             $table->timestamps();
 
