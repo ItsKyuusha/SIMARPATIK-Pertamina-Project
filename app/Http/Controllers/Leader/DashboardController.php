@@ -3,34 +3,49 @@
 namespace App\Http\Controllers\Leader;
 
 use App\Http\Controllers\Controller;
-use App\Models\Employee;
-use App\Models\Schedule;
+use App\Models\Absensi;
+use App\Models\Jadwal;
+use App\Models\PengajuanTukarShift;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        $hariIni = Carbon::today();
 
-        $leader = $user->employee;
+        $user = Auth::user();
 
-        $today = Carbon::today();
+        $jadwalHariIni = Jadwal::with([
+            'shift',
+            'leader.karyawan',
+            'operator.karyawan'
+        ])
+        ->whereDate('tanggal_kerja', $hariIni)
+        ->whereHas('anggotaJadwal.karyawan', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })
+        ->get();
 
-        // 🔥 Ambil tim (operator di bawah leader)
-        $teamIds = Employee::where('leader_id', $leader->id)->pluck('id');
+        $totalOperatorHadir = Absensi::whereDate('created_at', $hariIni)
+            ->whereIn('status', ['hadir', 'terlambat'])
+            ->whereHas('anggotaJadwal', function ($query) {
+                $query->where('tipe_role', 'operator');
+            })
+            ->count();
 
-        // 🔥 Jadwal hari ini
-        $todaySchedules = Schedule::with(['employee', 'shift'])
-            ->whereIn('employee_id', $teamIds)
-            ->whereDate('tanggal', $today)
-            ->get();
+            $pendingApprovalOperator = PengajuanTukarShift::where(
+            'tipe_pengajuan',
+            'tukar_operator'
+        )
+        ->where('status', 'pending')
+        ->count();
 
-        $totalTeam = $teamIds->count();
-
-        return view('leader.dashboard', compact(
-            'todaySchedules',
-            'totalTeam'
+        return view('leader.dashboard.index', compact(
+            'jadwalHariIni',
+            'totalOperatorHadir',
+            'pendingApprovalOperator'
         ));
     }
 }

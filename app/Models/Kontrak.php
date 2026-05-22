@@ -5,27 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Shift extends Model
+class Kontrak extends Model
 {
     use HasFactory;
 
-    protected $table = 'shift';
+    protected $table = 'kontrak';
 
     protected $fillable = [
-        'kode_shift',
-        'nama_shift',
-        'jam_masuk',
-        'jam_keluar',
+        'nama_kontrak',
         'deskripsi',
     ];
-
-    protected function casts(): array
-    {
-        return [
-            'jam_masuk' => 'datetime:H:i',
-            'jam_keluar' => 'datetime:H:i',
-        ];
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -33,8 +22,8 @@ class Shift extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function jadwal()
+    public function karyawan()
     {
-        return $this->hasMany(Jadwal::class);
+        return $this->hasMany(Karyawan::class);
     }
 }
